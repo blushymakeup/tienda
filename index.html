@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Blushy Makeup &amp; Beauty · Tienda de maquillaje en Florencia</title>
+<meta name="description" content="Maquillaje original en Florencia, Caquetá. Escoge tus productos, mira precios y disponibilidad, y haz tu pedido por WhatsApp.">
+<meta name="theme-color" content="#FBEEF2">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icono-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icono-192.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blushy Makeup &amp; Beauty">
+<meta property="og:title" content="Blushy Makeup &amp; Beauty · Tienda">
+<meta property="og:description" content="Maquillaje original en Florencia, Caquetá. Escoge y pide por WhatsApp.">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://davidlopez9-alt.github.io/tienda/">
+<meta property="og:image" content="https://davidlopez9-alt.github.io/tienda/img/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600&display=swap">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+/* Layout: tienda móvil primero — cabecera fija con categorías, cuadrícula de productos, carrito que sube desde abajo y sale por WhatsApp */
+:root{
+  --bg:#FBEEF2; --paper:#FFFFFF; --blush:#F7D7E0; --line:#F0CAD5;
+  --rose:#C66884; --wine:#5A1838; --ink:#3B1327; --muted:#8B5B6F;
+  --gold-a:#A5606A; --gold-b:#F2CDBF; --gold-c:#C7877F;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+
+/* Cabecera */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .row{display:flex;align-items:center;gap:12px;padding-block:8px}
+.top .brand{display:flex;align-items:center;flex:0 0 auto}
+.top .brand img{height:46px;width:auto;display:block}
+.search{flex:1;min-width:0;position:relative}
+.search input{width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 14px 10px 38px;font-size:14px;outline:none}
+.search input:focus{border-color:var(--rose);background:#fff}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.cartbtn{position:relative;flex:0 0 auto;width:48px;height:48px;border-radius:50%;border:0;background:linear-gradient(150deg,#7A2A50 0%,var(--wine) 62%);color:var(--gold-b);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(90,24,56,.28),inset 0 0 0 1.5px rgba(242,205,191,.6)}
+.cartbtn .n{position:absolute;top:-3px;right:-3px;min-width:21px;height:21px;padding:0 5px;border-radius:999px;background:var(--rose);color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;border:2px solid #fff}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-block:2px 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff}
+.chip.promo{color:var(--rose);border-color:#EBB3C3}
+.chip.promo[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:#fff}
+
+/* Portada */
+.hero{margin-top:16px;border-radius:26px;padding:22px 20px 20px;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0%,#FFF6F8 0%,#F9DDE5 55%,#F2C6D3 100%);border:1px solid var(--line)}
+.hero .logo{width:min(250px,64%);height:auto;display:block;margin:0 auto}
+.hero p.k{margin:10px 0 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(25px,6.2vw,36px);line-height:1.12;margin:6px auto 0;max-width:22ch;color:var(--wine);text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--rose)}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:500;background:var(--wine);color:#fff}
+.pill.g{background:#fff;color:var(--wine);border:1.5px solid #E9B9C6}
+.pill b{font-weight:600;color:var(--gold-b)}
+.spark{position:absolute;color:var(--gold-c);opacity:.8}
+
+/* Secciones y tarjetas */
+.sec{margin-top:26px}
+.sec h2{display:flex;align-items:baseline;gap:10px;margin:0 0 12px;font-family:var(--display);font-style:italic;font-weight:600;font-size:24px;color:var(--wine)}
+.sec h2 small{font-family:var(--body);font-style:normal;font-weight:400;font-size:12.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.card{background:var(--paper);border-radius:20px;padding:8px 8px 10px;display:flex;flex-direction:column;min-width:0;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(90,24,56,.06)}
+.ph{position:relative;border-radius:14px;overflow:hidden;background:#FFF7F9;aspect-ratio:1/1;max-width:100%}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;left:7px;top:7px;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:600;color:#fff;
+  background:linear-gradient(110deg,var(--gold-a),var(--gold-c) 55%,#B9767A)}
+.tag.out{background:var(--wine)}
+.last{position:absolute;right:7px;bottom:7px;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:500;background:rgba(255,255,255,.92);color:var(--rose);border:1px solid #EFC0CD}
+.card.agot .ph img{filter:grayscale(.8);opacity:.55}
+.card h3{font-size:14px;font-weight:600;line-height:1.25;margin:9px 4px 0;color:var(--ink)}
+.card p{font-size:12px;color:var(--muted);margin:3px 4px 0;line-height:1.3}
+.pr{margin:auto 4px 0;padding-top:8px;display:flex;align-items:baseline;flex-wrap:wrap;gap:0 7px}
+.pr b{font-family:var(--display);font-weight:700;font-size:19px;color:var(--wine);font-variant-numeric:lining-nums tabular-nums}
+.pr s{font-size:12px;color:var(--muted)}
+.pr small{flex-basis:100%;font-size:10.5px;line-height:1.2;color:var(--muted)}
+.act{margin:9px 2px 0}
+.add,.ask{width:100%;border:0;border-radius:12px;padding:10px 8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}
+.add{background:var(--wine);color:#fff}
+.add:active{transform:translateY(1px)}
+.ask{background:var(--blush);color:var(--wine)}
+.step{display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--wine);border-radius:12px;overflow:hidden}
+.step button{width:42px;height:40px;border:0;background:#fff;color:var(--wine);font-size:20px;font-weight:500;cursor:pointer}
+.step button:disabled{opacity:.3;cursor:default}
+.step span{font-weight:600;font-size:15px;color:var(--wine)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 10px}
+
+/* Cómo pedir */
+.how{margin-top:34px;background:var(--wine);color:#fff;border-radius:26px;padding:22px 20px}
+.how h2{margin:0 0 14px;font-family:var(--display);font-style:italic;font-weight:600;font-size:24px;color:var(--gold-b)}
+.how ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+@media (min-width:720px){.how ol{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.how li{display:flex;gap:12px;align-items:flex-start;min-width:0}
+.how li i{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:600;font-size:14px;color:var(--wine);background:linear-gradient(135deg,var(--gold-b),var(--gold-c))}
+.how li span{font-size:14px;line-height:1.45;color:#F8E3EA}
+.how li b{color:#fff;font-weight:600}
+/* Cierre: total y comprar */
+.fin{margin-top:16px;background:var(--paper);border:1.5px solid #E9B9C6;border-radius:26px;padding:22px 20px;text-align:center;box-shadow:0 6px 18px rgba(90,24,56,.06)}
+.fin h2{margin:0;font-family:var(--display);font-style:italic;font-weight:600;font-size:24px;color:var(--wine)}
+.fin .cnt{margin:4px 0 0;color:var(--muted);font-size:14px}
+.fin .big{display:block;margin-top:6px;font-family:var(--display);font-weight:800;font-size:38px;line-height:1.1;color:var(--wine);font-variant-numeric:lining-nums tabular-nums}
+.fin .sv{margin:4px 0 0;font-size:13px;color:var(--rose)}
+.buy{margin:16px auto 0;width:100%;max-width:420px;display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:18px;padding:16px 18px;background:linear-gradient(150deg,#7A2A50 0%,var(--wine) 62%);color:#fff;font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 10px 24px rgba(90,24,56,.28),inset 0 0 0 1.5px rgba(242,205,191,.55)}
+.buy svg{flex:0 0 auto;color:var(--gold-b)}
+.buy:active{transform:translateY(1px)}
+.buy.soft{background:var(--blush);color:var(--wine);box-shadow:none}
+.fin .mini{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.bar .bl{display:flex;align-items:center;gap:9px;min-width:0}
+.bar .bl svg{flex:0 0 auto;color:var(--gold-b)}
+.foot{margin:26px 0 0;padding-bottom:110px;text-align:center;color:var(--muted);font-size:13px}
+.wa{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.wa strong{font-size:17px;color:var(--wine);letter-spacing:.02em;user-select:all}
+.copy{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:500;color:var(--wine);cursor:pointer}
+
+/* Barra del pedido y hoja del carrito */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(251,238,242,0),var(--bg) 35%)}
+.bar button{width:100%;max-width:560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;border:0;border-radius:18px;padding:14px 18px;background:var(--wine);color:#fff;font-size:15px;font-weight:500;cursor:pointer;box-shadow:0 10px 24px rgba(90,24,56,.3)}
+.bar button b{font-family:var(--display);font-size:19px;font-weight:700;color:var(--gold-b)}
+.veil{position:fixed;inset:0;z-index:30;background:rgba(59,19,39,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:88%;overflow:auto;background:var(--paper);border-radius:24px 24px 0 0;padding-top:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet .hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sheet h2{margin:0;font-family:var(--display);font-weight:700;font-size:23px;color:var(--wine)}
+.x{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-size:20px;line-height:1;cursor:pointer;color:var(--wine)}
+.lines{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.line{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:10px;align-items:center}
+.line img{width:52px;height:52px;border-radius:10px;object-fit:cover}
+.line .t{font-size:13.5px;font-weight:500;line-height:1.25}
+.line .u{font-size:12px;color:var(--muted)}
+.line .step{width:118px}
+.line .step button{width:36px;height:34px}
+.tot{margin-top:14px;padding-top:12px;border-top:1.5px dashed var(--line);display:flex;justify-content:space-between;align-items:baseline}
+.tot span{color:var(--muted);font-size:14px}
+.tot b{font-family:var(--display);font-size:26px;font-weight:800;color:var(--wine);font-variant-numeric:lining-nums tabular-nums}
+.save{font-size:12.5px;color:var(--rose);text-align:right;margin-top:2px}
+.field{display:grid;gap:5px;margin-top:12px}
+.field label{font-size:13px;font-weight:500;color:var(--ink)}
+.field input,.field textarea{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;outline:none;background:#fff;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--rose)}
+.send{margin-top:16px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;padding:15px;background:#1F8F55;color:#fff;font-weight:600;font-size:16px;text-decoration:none}
+.note{font-size:12.5px;color:var(--muted);text-align:center;margin:10px 0 0}
+.clear{display:block;margin:8px auto 0;border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s ease}.card:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap gut">
+    <div class="row">
+      <a class="brand" href="#inicio" aria-label="Blushy, inicio"><img src="img/logo.png" alt="Blushy Makeup &amp; Beauty" width="68" height="46"></a>
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="q" type="search" placeholder="Buscar productos" aria-label="Buscar productos" autocomplete="off">
+      </div>
+      <button class="cartbtn" id="cartBtn" type="button" aria-label="Ver mi pedido">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 3.9h2c.6 0 1.1.4 1.2 1L6 7"></path><path d="M6 7h13.4c.8 0 1.4.8 1.2 1.6l-1.3 5.3c-.2.9-1 1.5-1.9 1.5H9.3c-.9 0-1.7-.7-1.9-1.6L6 7Z"></path><circle cx="9.7" cy="19.1" r="1.35"></circle><circle cx="17.1" cy="19.1" r="1.35"></circle><path fill="currentColor" stroke="none" transform="translate(13.3 11.2) scale(.16)" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"></path></svg>
+        <span class="n" id="cartN" hidden>0</span>
+      </button>
+    </div>
+    <nav class="chips" id="chips" aria-label="Categorías"></nav>
+  </div>
+</header>
+
+<main class="wrap gut" id="inicio">
+  <section class="hero">
+    <svg class="spark" style="left:8%;top:13%" width="22" height="22" viewBox="-15 -15 30 30" aria-hidden="true"><path fill="currentColor" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"/></svg>
+    <svg class="spark" style="right:9%;top:24%" width="16" height="16" viewBox="-15 -15 30 30" aria-hidden="true"><path fill="currentColor" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"/></svg>
+    <svg class="spark" style="left:13%;top:40%" width="18" height="20" viewBox="-15 -15 30 30" aria-hidden="true"><path fill="currentColor" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"/></svg>
+    <img class="logo" src="img/logo.png" alt="Blushy Makeup &amp; Beauty" width="640" height="435">
+    <p class="k">Maquillaje original · Florencia, Caquetá</p>
+    <h1>Escoge tu maquillaje y <em>pídelo por WhatsApp</em></h1>
+    <div class="pills">
+      <span class="pill" id="promoPill">✨ <b id="pctTxt">−10%</b> en <span id="nPromo"></span> productos marcados</span>
+      <span class="pill g">💗 Te respondemos con el total y la entrega</span>
+    </div>
+  </section>
+  <div id="list"></div>
+
+  <section class="how" aria-labelledby="howT">
+    <h2 id="howT">Cómo pedir</h2>
+    <ol>
+      <li><i>1</i><span><b>Agrega</b> al pedido lo que te guste. Puedes cambiar las cantidades cuando quieras.</span></li>
+      <li><i>2</i><span><b>Envía tu pedido</b> por WhatsApp con un toque. Llega listo a nuestro chat.</span></li>
+      <li><i>3</i><span><b>Paga por Nequi o Bancolombia</b>. Te enviamos los datos y coordinamos la entrega.</span></li>
+    </ol>
+  </section>
+  <section class="fin" id="fin" aria-label="Tu pedido">
+    <div id="finFull" hidden>
+      <h2>Tu pedido</h2>
+      <p class="cnt" id="finN"></p>
+      <b class="big" id="finTot">$ 0</b>
+      <p class="sv" id="finSave" hidden></p>
+      <button class="buy" id="finBtn" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 3.9h2c.6 0 1.1.4 1.2 1L6 7"></path><path d="M6 7h13.4c.8 0 1.4.8 1.2 1.6l-1.3 5.3c-.2.9-1 1.5-1.9 1.5H9.3c-.9 0-1.7-.7-1.9-1.6L6 7Z"></path><circle cx="9.7" cy="19.1" r="1.35"></circle><circle cx="17.1" cy="19.1" r="1.35"></circle><path fill="currentColor" stroke="none" transform="translate(13.3 11.2) scale(.16)" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"></path></svg>Comprar ahora</button>
+      <p class="mini">Revisas tu pedido y lo envías por WhatsApp con un toque.</p>
+    </div>
+    <div id="finEmpty">
+      <h2>Arma tu pedido</h2>
+      <p class="cnt">Agrega lo que te guste y aquí verás el total.</p>
+      <button class="buy soft" id="finUp" type="button">Ver productos</button>
+    </div>
+  </section>
+  <footer class="foot">
+    <div>Precios en pesos colombianos · Sujetos a disponibilidad · Actualizado: <span id="upd">13 nov 2026</span></div>
+    <div class="wa">WhatsApp Blushy <strong id="waNum">322 798 5943</strong><button class="copy" id="copyNum" type="button">Copiar</button></div>
+  </footer>
+</main>
+
+<div class="bar gut" id="bar" hidden><button type="button" id="barBtn"><span class="bl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 3.9h2c.6 0 1.1.4 1.2 1L6 7"></path><path d="M6 7h13.4c.8 0 1.4.8 1.2 1.6l-1.3 5.3c-.2.9-1 1.5-1.9 1.5H9.3c-.9 0-1.7-.7-1.9-1.6L6 7Z"></path><circle cx="9.7" cy="19.1" r="1.35"></circle><circle cx="17.1" cy="19.1" r="1.35"></circle><path fill="currentColor" stroke="none" transform="translate(13.3 11.2) scale(.16)" d="M0 15c2-11 4-13 15-15C4-2 2-4 0-15c-2 11-4 13-15 15 11 2 13 4 15 15z"></path></svg><span id="barTxt">Comprar ahora</span></span><b id="barTot">$ 0</b></button></div>
+
+<div class="veil" id="veil" hidden>
+  <div class="sheet gut" role="dialog" aria-modal="true" aria-labelledby="sheetT">
+    <div class="hd"><h2 id="sheetT">Mi pedido</h2><button class="x" id="closeSheet" type="button" aria-label="Cerrar">×</button></div>
+    <ul class="lines" id="lines"></ul>
+    <div class="tot"><span>Total productos</span><b id="sumTot">$ 0</b></div>
+    <div class="save" id="sumSave" hidden></div>
+    <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" type="text" placeholder="Ej: Laura Gómez" autocomplete="name"></div>
+    <div class="field"><label for="nota">Tono, barrio o algo que debamos saber (opcional)</label><textarea id="nota" rows="2" placeholder="Ej: domicilio en el barrio La Estrella"></textarea></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"></path></svg>
+      Enviar pedido por WhatsApp
+    </a>
+    <p class="note">Se abre WhatsApp con tu pedido escrito. Solo tienes que darle enviar. El domicilio se cobra aparte.</p>
+    <button class="clear" id="clear" type="button">Vaciar pedido</button>
+  </div>
+</div>
+
+<script>
+let PRODUCTS = [], byH = {}, UPDATED = "", PCT = 10, REF = {};
+const PHONE = "573227985943";
+const CATS = ["Rostro","Rubor e iluminador","Labios","Cejas","Ojos","Skincare","Accesorios"];
+const fmt = n => "$ " + Math.round(n).toLocaleString("es-CO").replace(/,/g, ".");
+const price = p => p.o || p.p;
+const wa = text => "https://api.whatsapp.com/send?phone=" + PHONE + "&text=" + encodeURIComponent(text);
+let cat = "Todos", q = "", cart = {}, finSeen = false;
+try { cart = JSON.parse(localStorage.getItem("blushy-cart") || "{}") || {}; } catch (e) { cart = {}; }
+const save = () => { try { localStorage.setItem("blushy-cart", JSON.stringify(cart)); } catch (e) {} };
+const img = p => p.f || ("img/" + p.h + ".jpg");
+// precio anterior real en Blushy (ref.json = precio con el que se publicó al llegar): solo se muestra si es mayor que el precio de hoy y el producto no tiene promo
+const refOf = p => { const r = REF[p.h]; return (!p.o && r > p.p) ? r : 0; };
+
+function chips() {
+  const el = document.getElementById("chips"); el.textContent = "";
+  for (const c of ["Todos", ...(PRODUCTS.some(p => p.o) ? ["Promo −" + PCT + "%"] : []), ...CATS.filter(c => PRODUCTS.some(p => p.c === c))]) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip" + (c.startsWith("Promo") ? " promo" : "");
+    b.textContent = c; b.setAttribute("aria-pressed", String(c === cat));
+    b.onclick = () => { cat = c; chips(); list(); window.scrollTo({ top: document.getElementById("list").offsetTop - 120, behavior: "smooth" }); };
+    el.appendChild(b);
+  }
+}
+function control(p) {
+  const wrap = document.createElement("div"); wrap.className = "act";
+  if (p.s <= 0) {
+    const a = document.createElement("a"); a.className = "ask"; a.target = "_blank"; a.rel = "noopener";
+    a.href = wa("Hola Blushy 💗, ¿cuándo vuelve a llegar " + p.n + "? ✨"); a.textContent = "Preguntar cuándo llega";
+    wrap.appendChild(a); return wrap;
+  }
+  const qty = cart[p.h] || 0;
+  if (!qty) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "add"; b.textContent = "Agregar";
+    b.onclick = () => setQty(p.h, 1); wrap.appendChild(b); return wrap;
+  }
+  wrap.appendChild(stepper(p, qty)); return wrap;
+}
+function stepper(p, qty) {
+  const s = document.createElement("div"); s.className = "step";
+  const m = document.createElement("button"); m.type = "button"; m.textContent = "−"; m.setAttribute("aria-label", "Quitar uno");
+  m.onclick = () => setQty(p.h, qty - 1);
+  const n = document.createElement("span"); n.textContent = qty;
+  const plus = document.createElement("button"); plus.type = "button"; plus.textContent = "+"; plus.setAttribute("aria-label", "Agregar uno");
+  plus.disabled = qty >= p.s; plus.onclick = () => setQty(p.h, qty + 1);
+  s.append(m, n, plus); return s;
+}
+function card(p) {
+  const a = document.createElement("article"); a.className = "card" + (p.s <= 0 ? " agot" : "");
+  const ph = document.createElement("div"); ph.className = "ph";
+  const im = document.createElement("img"); im.src = img(p); im.alt = p.n; im.loading = "lazy"; im.width = 300; im.height = 300;
+  ph.appendChild(im);
+  if (p.s <= 0) { const t = document.createElement("span"); t.className = "tag out"; t.textContent = "Agotado"; ph.appendChild(t); }
+  else if (p.o) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "−" + PCT + "%"; ph.appendChild(t); }
+  else if (refOf(p)) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "−" + Math.max(1, Math.round((refOf(p) - p.p) / refOf(p) * 100)) + "%"; ph.appendChild(t); }
+  if (p.s > 0 && p.s <= 2) { const l = document.createElement("span"); l.className = "last"; l.textContent = "Últimas unidades"; ph.appendChild(l); }
+  const h = document.createElement("h3"); h.textContent = p.n;
+  const d = document.createElement("p"); d.textContent = p.d;
+  const pr = document.createElement("div"); pr.className = "pr";
+  const b = document.createElement("b"); b.textContent = fmt(price(p)); pr.appendChild(b);
+  if (p.o) { const s = document.createElement("s"); s.textContent = fmt(p.p); pr.appendChild(s); }
+  else if (refOf(p)) { const s = document.createElement("s"); s.textContent = fmt(refOf(p)); const k = document.createElement("small"); k.textContent = "Precio anterior"; pr.append(s, k); }
+  a.append(ph, h, d, pr, control(p)); return a;
+}
+const norm = t => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+function list() {
+  const root = document.getElementById("list"); root.textContent = "";
+  const nq = norm(q.trim());
+  let items = PRODUCTS.filter(p => !nq || norm(p.n + " " + p.d + " " + p.c).includes(nq));
+  if (cat.startsWith("Promo")) items = items.filter(p => p.o);
+  else if (cat !== "Todos") items = items.filter(p => p.c === cat);
+  const groups = (cat === "Todos" || cat.startsWith("Promo")) && !nq ? CATS.map(c => [c, items.filter(p => p.c === c)]) : [[nq ? "Resultados" : cat, items]];
+  let shown = 0;
+  for (const [title, its] of groups) {
+    if (!its.length) continue; shown += its.length;
+    const sec = document.createElement("section"); sec.className = "sec";
+    const h2 = document.createElement("h2"); h2.textContent = title;
+    const sm = document.createElement("small"); sm.textContent = its.length + (its.length === 1 ? " producto" : " productos"); h2.appendChild(sm);
+    const g = document.createElement("div"); g.className = "grid";
+    // disponibles primero, agotados al final
+    its.slice().sort((a, b) => (b.s > 0) - (a.s > 0)).forEach(p => g.appendChild(card(p)));
+    sec.append(h2, g); root.appendChild(sec);
+  }
+  if (!shown) { const e = document.createElement("div"); e.className = "sec"; e.innerHTML = '<div class="grid"><div class="empty">No encontramos ese producto. Escríbenos por WhatsApp y te ayudamos a buscarlo.</div></div>'; root.appendChild(e); }
+}
+function setQty(h, n) {
+  const p = byH[h]; n = Math.max(0, Math.min(n, p.s));
+  if (n) cart[h] = n; else delete cart[h];
+  save(); list(); summary();
+}
+function totals() {
+  let u = 0, t = 0, full = 0;
+  for (const h in cart) { const p = byH[h]; u += cart[h]; t += price(p) * cart[h]; full += p.p * cart[h]; }
+  return { u, t, full };
+}
+function message() {
+  const { t, full } = totals();
+  const nombre = document.getElementById("nombre").value.trim();
+  const nota = document.getElementById("nota").value.trim();
+  let m = "Hola Blushy 💗, quiero hacer este pedido ✨\n\n";
+  for (const h in cart) { const p = byH[h]; m += "• " + cart[h] + " x " + p.n + " — " + fmt(price(p) * cart[h]) + "\n"; }
+  m += "\nTotal: " + fmt(t);
+  if (full > t) m += " (ahorro " + fmt(full - t) + ")";
+  if (nombre) m += "\nNombre: " + nombre;
+  if (nota) m += "\nNota: " + nota;
+  return m;
+}
+function summary() {
+  const { u, t, full } = totals();
+  const n = document.getElementById("cartN"); n.hidden = !u; n.textContent = u;
+  document.getElementById("bar").hidden = !u || !document.getElementById("veil").hidden || finSeen;
+  document.getElementById("barTxt").textContent = "Comprar ahora · " + u + (u === 1 ? " producto" : " productos");
+  document.getElementById("finFull").hidden = !u; document.getElementById("finEmpty").hidden = !!u;
+  document.getElementById("finN").textContent = u + (u === 1 ? " producto" : " productos");
+  document.getElementById("finTot").textContent = fmt(t);
+  const fs = document.getElementById("finSave"); fs.hidden = !(full > t); fs.textContent = "Ahorras " + fmt(full - t) + " con la promo";
+  document.getElementById("barTot").textContent = fmt(t);
+  document.getElementById("sumTot").textContent = fmt(t);
+  const sv = document.getElementById("sumSave"); sv.hidden = !(full > t); sv.textContent = "Ahorras " + fmt(full - t) + " con la promo";
+  const ul = document.getElementById("lines"); ul.textContent = "";
+  for (const h in cart) {
+    const p = byH[h]; const li = document.createElement("li"); li.className = "line";
+    const im = document.createElement("img"); im.src = img(p); im.alt = "";
+    const tx = document.createElement("div"); tx.style.minWidth = "0";
+    const t1 = document.createElement("div"); t1.className = "t"; t1.textContent = p.n;
+    const t2 = document.createElement("div"); t2.className = "u"; t2.textContent = fmt(price(p)) + " c/u";
+    tx.append(t1, t2); li.append(im, tx, stepper(p, cart[h])); ul.appendChild(li);
+  }
+  if (!u) { const li = document.createElement("li"); li.className = "u"; li.textContent = "Tu pedido está vacío. Toca «Agregar» en los productos que quieras."; ul.appendChild(li); }
+  const send = document.getElementById("send");
+  send.href = u ? wa(message()) : wa("Hola Blushy 💗, quiero hacer un pedido ✨");
+}
+function openSheet(open) {
+  document.getElementById("veil").hidden = !open;
+  document.body.style.overflow = open ? "hidden" : "";
+  summary();
+}
+document.getElementById("cartBtn").onclick = () => openSheet(true);
+document.getElementById("barBtn").onclick = () => openSheet(true);
+document.getElementById("finBtn").onclick = () => openSheet(true);
+document.getElementById("finUp").onclick = () => window.scrollTo({ top: document.getElementById("list").offsetTop - 120, behavior: "smooth" });
+if ("IntersectionObserver" in window) new IntersectionObserver(es => { finSeen = es[0].isIntersecting; if (PRODUCTS.length) summary(); }, { threshold: 0.6 }).observe(document.getElementById("fin"));
+document.getElementById("closeSheet").onclick = () => openSheet(false);
+document.getElementById("veil").addEventListener("click", e => { if (e.target.id === "veil") openSheet(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") openSheet(false); });
+document.getElementById("clear").onclick = () => { cart = {}; save(); list(); summary(); };
+document.getElementById("nombre").addEventListener("input", summary);
+document.getElementById("nota").addEventListener("input", summary);
+document.getElementById("q").addEventListener("input", e => { q = e.target.value; list(); });
+document.getElementById("copyNum").onclick = async e => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText("3227985943"); b.textContent = "Copiado"; }
+  catch (err) { const r = document.createRange(); r.selectNodeContents(document.getElementById("waNum")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selecciónalo y copia"; }
+  setTimeout(() => b.textContent = "Copiar", 2000);
+};
+async function load() {
+  const root = document.getElementById("list");
+  root.innerHTML = '<div class="sec"><div class="grid"><div class="empty">Cargando productos…</div></div></div>';
+  try {
+    const r = await fetch("productos.json", { cache: "no-store" });
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    PRODUCTS = j.productos || []; UPDATED = j.actualizado || ""; PCT = j.promoPct || 0;
+  } catch (e) {
+    root.innerHTML = '<div class="sec"><div class="grid"><div class="empty">No pudimos cargar los productos. Recarga la página o escríbenos por WhatsApp al 322 798 5943.</div></div></div>';
+    return;
+  }
+  try { const rr = await fetch("ref.json", { cache: "no-store" }); REF = rr.ok ? await rr.json() : {}; } catch (e) { REF = {}; }
+  byH = Object.fromEntries(PRODUCTS.map(p => [p.h, p]));
+  for (const h in cart) { const p = byH[h]; if (!p || p.s <= 0) delete cart[h]; else cart[h] = Math.min(cart[h], p.s); }
+  const nP = PRODUCTS.filter(p => p.o && p.s > 0).length;
+  document.getElementById("nPromo").textContent = nP;
+  document.getElementById("pctTxt").textContent = "−" + PCT + "%";
+  document.getElementById("promoPill").hidden = !(PCT > 0 && nP > 0);
+  if (UPDATED) document.getElementById("upd").textContent = UPDATED;
+  chips(); list(); summary();
+}
+load();
+</script>
+</body>
+</html>
