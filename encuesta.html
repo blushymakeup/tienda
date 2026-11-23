@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>Blushy · Cuéntanos qué usas</title>
+<meta name="description" content="Cuéntanos qué maquillaje usas y te lo traemos a Florencia. Clientas fijas Blushy.">
+<meta name="theme-color" content="#FBEEF2">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icono-32.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blushy Makeup &amp; Beauty">
+<meta property="og:title" content="Blushy · Cuéntanos qué maquillaje usas">
+<meta property="og:description" content="2 minutos. Te traemos tus productos y te avisamos primero de lo nuevo.">
+<meta property="og:url" content="https://blushymakeup.github.io/tienda/encuesta.html">
+<meta property="og:image" content="https://blushymakeup.github.io/tienda/img/compartir.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#FBEEF2; --paper:#FFFFFF; --blush:#F7D7E0; --line:#F0CAD5;
+  --rose:#C66884; --wine:#5A1838; --ink:#3B1327; --muted:#8B5B6F;
+  --gold-b:#F2CDBF; --gold-c:#C7877F;
+  --display:"Playfair Display",Georgia,serif;
+  --body:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding:0 max(16px,env(safe-area-inset-left)) 40px}
+.wrap{max-width:620px;margin:0 auto}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.hero{margin-top:16px;border-radius:26px;padding:22px 20px;text-align:center;background:radial-gradient(120% 90% at 50% 0%,#FFF6F8 0%,#F9DDE5 55%,#F2C6D3 100%);border:1px solid var(--line)}
+.hero img{width:min(190px,56%);height:auto;display:block;margin:0 auto}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(24px,6vw,32px);line-height:1.15;margin:8px 0 0;color:var(--wine);text-wrap:balance}
+.hero h1 em{color:var(--rose)}
+.hero p{margin:8px auto 0;max-width:40ch;color:var(--muted);font-size:14px}
+.card{margin-top:14px;background:var(--paper);border-radius:20px;padding:18px 16px;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(90,24,56,.06)}
+.card h2{margin:0 0 4px;font-family:var(--display);font-style:italic;font-weight:600;font-size:21px;color:var(--wine)}
+.card .hint{margin:0 0 10px;font-size:13px;color:var(--muted)}
+label.f{display:block;font-size:13.5px;font-weight:500;margin:12px 0 5px}
+input[type=text],input[type=tel],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--rose)}
+textarea{resize:vertical;min-height:70px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips label{display:inline-flex}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer}
+.chips input:checked+span{background:var(--wine);border-color:var(--wine);color:#fff}
+.chips input:focus-visible+span{outline:3px solid var(--rose);outline-offset:2px}
+.prod{border-top:1.5px dashed var(--line);padding-top:12px;margin-top:12px}
+.prod:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.prod b{display:block;font-size:15px;color:var(--wine)}
+.prod .two{margin-top:6px;grid-template-columns:1.35fr 1fr}
+.ok{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin-top:4px}
+.ok input{margin-top:3px;width:18px;height:18px;accent-color:var(--wine);flex:0 0 auto}
+.send{margin-top:16px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:18px;padding:16px;background:#25D366;color:#fff;font-weight:600;font-size:17px;cursor:pointer;box-shadow:0 8px 20px rgba(37,211,102,.3)}
+.send:disabled{opacity:.5;cursor:default}
+.err{color:#B42335;font-size:13px;margin:8px 0 0;text-align:center}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:16px}
+.foot a{color:var(--wine)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <img src="img/logo.png" alt="Blushy Makeup &amp; Beauty" width="640" height="435">
+    <h1>Cuéntanos qué usas y <em>te lo traemos</em></h1>
+    <p>Toma 2 minutos. Así sabemos qué traer en el próximo pedido y te avisamos primero cuando llegue lo tuyo.</p>
+  </section>
+
+  <form id="f" novalidate>
+    <section class="card">
+      <h2>Sobre ti</h2>
+      <label class="f" for="nombre">Nombre *</label>
+      <input type="text" id="nombre" autocomplete="name" required placeholder="Ej: Laura Gómez">
+      <div class="two">
+        <div><label class="f" for="barrio">Barrio o municipio</label><input type="text" id="barrio" placeholder="Ej: La Estrella"></div>
+        <div><label class="f" for="cumple">Cumpleaños</label><input type="text" id="cumple" placeholder="Día y mes"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Tu piel</h2>
+      <label class="f">Tipo de piel</label>
+      <div class="chips" data-name="Tipo de piel" data-one>
+        <label><input type="radio" name="piel" value="Seca"><span>Seca</span></label>
+        <label><input type="radio" name="piel" value="Grasa"><span>Grasa</span></label>
+        <label><input type="radio" name="piel" value="Mixta"><span>Mixta</span></label>
+        <label><input type="radio" name="piel" value="Normal"><span>Normal</span></label>
+        <label><input type="radio" name="piel" value="Sensible"><span>Sensible</span></label>
+        <label><input type="radio" name="piel" value="No sé"><span>No sé</span></label>
+      </div>
+      <label class="f">Tono de piel</label>
+      <div class="chips" data-name="Tono de piel" data-one>
+        <label><input type="radio" name="tono" value="Claro"><span>Claro</span></label>
+        <label><input type="radio" name="tono" value="Medio"><span>Medio</span></label>
+        <label><input type="radio" name="tono" value="Trigueño"><span>Trigueño</span></label>
+        <label><input type="radio" name="tono" value="Moreno"><span>Moreno</span></label>
+        <label><input type="radio" name="tono" value="Oscuro"><span>Oscuro</span></label>
+      </div>
+      <label class="f">¿Qué te preocupa más?</label>
+      <div class="chips" data-name="Le preocupa">
+        <label><input type="checkbox" value="Ojeras"><span>Ojeras</span></label>
+        <label><input type="checkbox" value="Brillo / grasa"><span>Brillo / grasa</span></label>
+        <label><input type="checkbox" value="Granitos o marcas"><span>Granitos o marcas</span></label>
+        <label><input type="checkbox" value="Manchas"><span>Manchas</span></label>
+        <label><input type="checkbox" value="Que no dure el maquillaje"><span>Que no dure</span></label>
+        <label><input type="checkbox" value="Resequedad"><span>Resequedad</span></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Lo que usas hoy</h2>
+      <p class="hint">Escribe la marca y el tono que usas. Si no usas ese producto, déjalo en blanco.</p>
+      <div id="prods"></div>
+    </section>
+
+    <section class="card">
+      <h2>Tus marcas</h2>
+      <label class="f">¿Qué marcas te gustan o has usado?</label>
+      <div class="chips" data-name="Marcas que le gustan">
+        <label><input type="checkbox" value="Bloomshell"><span>Bloomshell</span></label>
+        <label><input type="checkbox" value="Atenea"><span>Atenea</span></label>
+        <label><input type="checkbox" value="Ani-K"><span>Ani-K</span></label>
+        <label><input type="checkbox" value="Montoc"><span>Montoc</span></label>
+        <label><input type="checkbox" value="Lula"><span>Lula</span></label>
+        <label><input type="checkbox" value="Trendy"><span>Trendy</span></label>
+        <label><input type="checkbox" value="Samy"><span>Samy</span></label>
+        <label><input type="checkbox" value="Prosa"><span>Prosa</span></label>
+        <label><input type="checkbox" value="Majikal"><span>Majikal</span></label>
+        <label><input type="checkbox" value="Ruby Rose"><span>Ruby Rose</span></label>
+        <label><input type="checkbox" value="Maybelline"><span>Maybelline</span></label>
+        <label><input type="checkbox" value="Vogue"><span>Vogue</span></label>
+      </div>
+      <label class="f" for="otras">¿Otra marca?</label>
+      <input type="text" id="otras" placeholder="Ej: Sheglam, OG, Girly…">
+      <label class="f" for="traer">¿Qué producto quieres y no consigues en Florencia?</label>
+      <textarea id="traer" placeholder="Ej: corrector Atenea tono Cinnamon, pestañina café…"></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Cómo compras</h2>
+      <label class="f">¿Cada cuánto compras maquillaje?</label>
+      <div class="chips" data-name="Compra maquillaje" data-one>
+        <label><input type="radio" name="cada" value="Cada mes"><span>Cada mes</span></label>
+        <label><input type="radio" name="cada" value="Cada 2 o 3 meses"><span>Cada 2 o 3 meses</span></label>
+        <label><input type="radio" name="cada" value="Cuando se me acaba"><span>Cuando se me acaba</span></label>
+        <label><input type="radio" name="cada" value="En fechas especiales"><span>En fechas especiales</span></label>
+      </div>
+      <label class="f">¿Cuánto gastas más o menos al mes?</label>
+      <div class="chips" data-name="Gasto al mes" data-one>
+        <label><input type="radio" name="gasto" value="Menos de $50.000"><span>Menos de $50.000</span></label>
+        <label><input type="radio" name="gasto" value="$50.000 a $100.000"><span>$50.000 a $100.000</span></label>
+        <label><input type="radio" name="gasto" value="$100.000 a $200.000"><span>$100.000 a $200.000</span></label>
+        <label><input type="radio" name="gasto" value="Más de $200.000"><span>Más de $200.000</span></label>
+      </div>
+      <label class="f">¿Cómo prefieres recibir?</label>
+      <div class="chips" data-name="Prefiere recibir">
+        <label><input type="checkbox" value="Domicilio"><span>Domicilio</span></label>
+        <label><input type="checkbox" value="Recoger"><span>Recoger</span></label>
+        <label><input type="checkbox" value="Tienda física"><span>En una tienda física</span></label>
+      </div>
+      <label class="f">¿Qué te animaría a comprarnos siempre?</label>
+      <div class="chips" data-name="Le animaría">
+        <label><input type="checkbox" value="Descuento de clienta fija"><span>Descuento de clienta fija</span></label>
+        <label><input type="checkbox" value="Regalo en mi cumpleaños"><span>Regalo en mi cumpleaños</span></label>
+        <label><input type="checkbox" value="Que me avisen cuando llegue lo mío"><span>Que me avisen cuando llegue lo mío</span></label>
+        <label><input type="checkbox" value="Muestras para probar tonos"><span>Muestras para probar tonos</span></label>
+        <label><input type="checkbox" value="Combos"><span>Combos</span></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <label class="ok"><input type="checkbox" id="acepto"><span>Acepto que Blushy guarde estas respuestas y me escriba por WhatsApp con novedades y promociones. Puedo pedir que me borren cuando quiera.</span></label>
+      <button class="send" id="send" type="submit"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>Enviar por WhatsApp</button>
+      <p class="err" id="err" hidden></p>
+    </section>
+  </form>
+  <p class="foot">Se abre WhatsApp con tus respuestas escritas: solo dale enviar.<br>¿Quieres ver los productos? <a href="./">Tienda Blushy</a></p>
+</div>
+<script>
+const PHONE = "573227985943";
+const PRODS = [
+  ["Base", "Ej: My Foundation", "Ej: Beige"],
+  ["Corrector", "Ej: Atenea", "Ej: Vainilla"],
+  ["Polvo", "Ej: Set Powder", "Ej: Traslúcido"],
+  ["Rubor", "Ej: Jelly Glow", "Ej: Sonrojadita"],
+  ["Pestañina", "Ej: Prosa", "Ej: Negra"],
+  ["Cejas (lápiz, gel o betún)", "Ej: Bloom Definer", "Ej: 02 café"],
+  ["Labios (gloss, tinta o labial)", "Ej: Lip Oil Trendy", "Ej: Rosado"],
+  ["Fijador", "Ej: Bloom Fix", ""],
+  ["Cuidado de la piel (limpiador, protector)", "Ej: Bloom Cleanser", ""]
+];
+const box = document.getElementById("prods");
+PRODS.forEach(([n, pm, pt], i) => {
+  const d = document.createElement("div"); d.className = "prod";
+  const b = document.createElement("b"); b.textContent = n;
+  const g = document.createElement("div"); g.className = "two";
+  const m = document.createElement("input"); m.type = "text"; m.id = "m" + i; m.placeholder = pm; m.setAttribute("aria-label", n + ": marca y producto");
+  const t = document.createElement("input"); t.type = "text"; t.id = "t" + i; t.placeholder = pt || "Tono (si aplica)"; t.setAttribute("aria-label", n + ": tono");
+  g.append(m, t); d.append(b, g); box.appendChild(d);
+});
+const val = id => document.getElementById(id).value.trim();
+const chips = name => [...document.querySelectorAll('.chips[data-name="' + name + '"] input:checked')].map(x => x.value).join(", ");
+document.getElementById("f").addEventListener("submit", e => {
+  e.preventDefault();
+  const err = document.getElementById("err");
+  if (!val("nombre")) { err.textContent = "Escribe tu nombre para saber quién eres 💗"; err.hidden = false; document.getElementById("nombre").focus(); return; }
+  if (!document.getElementById("acepto").checked) { err.textContent = "Marca la casilla de autorización para poder enviarlo."; err.hidden = false; return; }
+  err.hidden = true;
+  const L = ["Hola Blushy 💗, estas son mis respuestas ✨", ""];
+  const add = (k, v) => { if (v) L.push("*" + k + ":* " + v); };
+  add("Nombre", val("nombre")); add("Barrio", val("barrio")); add("Cumpleaños", val("cumple"));
+  add("Piel", chips("Tipo de piel")); add("Tono", chips("Tono de piel")); add("Me preocupa", chips("Le preocupa"));
+  const usa = PRODS.map(([n], i) => { const m = val("m" + i), t = val("t" + i); return (m || t) ? "• " + n + ": " + [m, t].filter(Boolean).join(" · ") : ""; }).filter(Boolean);
+  if (usa.length) { L.push("", "*Lo que uso:*", ...usa, ""); }
+  add("Marcas que me gustan", [chips("Marcas que le gustan"), val("otras")].filter(Boolean).join(", "));
+  add("Quiero y no consigo", val("traer"));
+  add("Compro", chips("Compra maquillaje")); add("Gasto al mes", chips("Gasto al mes"));
+  add("Prefiero", chips("Prefiere recibir")); add("Me animaría", chips("Le animaría"));
+  L.push("", "✅ Acepto recibir novedades de Blushy por WhatsApp.");
+  window.open("https://api.whatsapp.com/send?phone=" + PHONE + "&text=" + encodeURIComponent(L.join("\n")), "_blank", "noopener");
+});
+</script>
+</body>
+</html>
