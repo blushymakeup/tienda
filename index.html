@@ -257,7 +257,38 @@ const wa = text => "https://api.whatsapp.com/send?phone=" + PHONE + "&text=" + e
 let cat = "Todos", q = "", cart = {}, finSeen = false;
 try { cart = JSON.parse(localStorage.getItem("blushy-cart") || "{}") || {}; } catch (e) { cart = {}; }
 const save = () => { try { localStorage.setItem("blushy-cart", JSON.stringify(cart)); } catch (e) {} };
-const img = p => p.f || ("img/" + p.h + ".jpg");
+const img = p => (p.f && /^img\//.test(p.f)) ? p.f : "img/" + p.h + ".jpg";
+const noPhoto = im => { im.onerror = () => { im.onerror = null; im.src = "img/logo.png"; }; };
+// Datos al día: la tarea de la Caja los escribe cada noche en una hoja de Google pública (solo lectura, sin costos).
+// Si la hoja no responde, se usa la copia de productos.json que está en esta misma página.
+const SHEET = "1hKsUXRY9YM4Q7Ovum1jfhwkWwkOVsFsHn_Mz8wtS8xc";
+function csvFirstCol(t) {
+  const out = []; let cell = "", col = 0, q = false;
+  const end = () => { out.push(cell); cell = ""; col = 0; };
+  for (let i = 0; i < t.length; i++) {
+    const ch = t[i];
+    if (q) { if (ch === '"') { if (t[i + 1] === '"') { if (col === 0) cell += '"'; i++; } else q = false; } else if (col === 0) cell += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === ",") col++;
+    else if (ch === "\r") { if (t[i + 1] === "\n") i++; end(); }
+    else if (ch === "\n") end();
+    else if (col === 0) cell += ch;
+  }
+  if (cell || col) end();
+  return out;
+}
+async function fromSheet() {
+  const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 7000);
+  try {
+    const r = await fetch("https://docs.google.com/spreadsheets/d/" + SHEET + "/gviz/tq?tqx=out:csv&sheet=web&headers=0&range=A1:A2000", { cache: "no-store", signal: ctl.signal });
+    if (!r.ok) throw new Error(r.status);
+    const cells = csvFirstCol(await r.text()).map(c => c.trim()).filter(Boolean);
+    const meta = JSON.parse(cells[0]);
+    const productos = cells.slice(1).map(c => JSON.parse(c)).filter(p => p && p.h && p.n && typeof p.p === "number");
+    if (!productos.length || !meta.actualizado) throw new Error("vacía");
+    return { actualizado: meta.actualizado, promoPct: meta.promoPct || 0, productos, ref: meta.ref || {} };
+  } finally { clearTimeout(tm); }
+}
 // precio anterior real en Blushy (ref.json = precio con el que se publicó al llegar): solo se muestra si es mayor que el precio de hoy y el producto no tiene promo
 const refOf = p => { const r = REF[p.h]; return (!p.o && r > p.p) ? r : 0; };
 
@@ -297,7 +328,7 @@ function stepper(p, qty) {
 function card(p) {
   const a = document.createElement("article"); a.className = "card" + (p.s <= 0 ? " agot" : "");
   const ph = document.createElement("div"); ph.className = "ph";
-  const im = document.createElement("img"); im.src = img(p); im.alt = p.n; im.loading = "lazy"; im.width = 300; im.height = 300;
+  const im = document.createElement("img"); noPhoto(im); im.src = img(p); im.alt = p.n; im.loading = "lazy"; im.width = 300; im.height = 300;
   ph.appendChild(im);
   if (p.s <= 0) { const t = document.createElement("span"); t.className = "tag out"; t.textContent = "Agotado"; ph.appendChild(t); }
   else if (p.o) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "−" + PCT + "%"; ph.appendChild(t); }
@@ -369,7 +400,7 @@ function summary() {
   const ul = document.getElementById("lines"); ul.textContent = "";
   for (const h in cart) {
     const p = byH[h]; const li = document.createElement("li"); li.className = "line";
-    const im = document.createElement("img"); im.src = img(p); im.alt = "";
+    const im = document.createElement("img"); noPhoto(im); im.src = img(p); im.alt = "";
     const tx = document.createElement("div"); tx.style.minWidth = "0";
     const t1 = document.createElement("div"); t1.className = "t"; t1.textContent = p.n;
     const t2 = document.createElement("div"); t2.className = "u"; t2.textContent = fmt(price(p)) + " c/u";
@@ -399,16 +430,21 @@ document.getElementById("q").addEventListener("input", e => { q = e.target.value
 async function load() {
   const root = document.getElementById("list");
   root.innerHTML = '<div class="sec"><div class="grid"><div class="empty">Cargando productos…</div></div></div>';
-  try {
-    const r = await fetch("productos.json", { cache: "no-store" });
-    if (!r.ok) throw new Error(r.status);
-    const j = await r.json();
-    PRODUCTS = j.productos || []; UPDATED = j.actualizado || ""; PCT = j.promoPct || 0;
-  } catch (e) {
-    root.innerHTML = '<div class="sec"><div class="grid"><div class="empty">No pudimos cargar los productos. Recarga la página o escríbenos por WhatsApp al 322 798 5943.</div></div></div>';
-    return;
+  let j = null;
+  try { j = await fromSheet(); } catch (e) { j = null; }
+  if (j) { PRODUCTS = j.productos; UPDATED = j.actualizado; PCT = j.promoPct; REF = j.ref; }
+  else {
+    try {
+      const r = await fetch("productos.json", { cache: "no-store" });
+      if (!r.ok) throw new Error(r.status);
+      const k = await r.json();
+      PRODUCTS = k.productos || []; UPDATED = k.actualizado || ""; PCT = k.promoPct || 0;
+    } catch (e) {
+      root.innerHTML = '<div class="sec"><div class="grid"><div class="empty">No pudimos cargar los productos. Recarga la página o escríbenos por WhatsApp al 322 798 5943.</div></div></div>';
+      return;
+    }
+    try { const rr = await fetch("ref.json", { cache: "no-store" }); REF = rr.ok ? await rr.json() : {}; } catch (e) { REF = {}; }
   }
-  try { const rr = await fetch("ref.json", { cache: "no-store" }); REF = rr.ok ? await rr.json() : {}; } catch (e) { REF = {}; }
   byH = Object.fromEntries(PRODUCTS.map(p => [p.h, p]));
   for (const h in cart) { const p = byH[h]; if (!p || p.s <= 0) delete cart[h]; else cart[h] = Math.min(cart[h], p.s); }
   const nP = PRODUCTS.filter(p => p.o && p.s > 0).length;
